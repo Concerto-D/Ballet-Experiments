@@ -1,0 +1,23 @@
+syntax = 'proto3';
+
+package mjuz;
+
+import 'google/protobuf/empty.proto';
+import 'google/protobuf/struct.proto';
+
+service Deployment {
+	// Initializes or updates an offer. Idempotent. Response does not imply deployment of a wish for the offer.
+	// Assumes all offer properties are set.
+	rpc offer(DeploymentOffer) returns (google.protobuf.Empty) {}
+	// Withdraws an offer and demands to release it. On response, we assume no wish for the offer
+	// is deployed anymore or will be deployed.
+	// Assumes `origin` and `name` are set.
+	rpc releaseOffer(DeploymentOffer) returns (google.protobuf.Empty) {}
+	rpc heartbeat(google.protobuf.Empty) returns (google.protobuf.Empty) {}
+}
+
+message DeploymentOffer {
+	string origin = 1;
+	string name = 2;
+	google.protobuf.Value offer = 3;
+}

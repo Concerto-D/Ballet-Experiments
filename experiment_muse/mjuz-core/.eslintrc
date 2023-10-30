@@ -1,0 +1,30 @@
+{
+	"extends": [
+		"eslint:recommended",
+		"plugin:@typescript-eslint/recommended",
+		"plugin:@typescript-eslint/eslint-recommended",
+		"plugin:prettier/recommended"
+	],
+	"plugins": [
+		"@typescript-eslint",
+		"prettier"
+	],
+	"env": {
+		"jest": true,
+		"node": true,
+		"es6": true
+	},
+	"rules": {
+		"prettier/prettier": [
+			"error",
+			{
+				"singleQuote": true
+			}
+		],
+		"@typescript-eslint/consistent-type-definitions": [
+			"error",
+			"type"
+		]
+	},
+	"parser": "@typescript-eslint/parser"
+}

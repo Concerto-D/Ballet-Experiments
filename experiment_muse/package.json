@@ -1,0 +1,23 @@
+{
+  "name": "root",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "yarn workspaces foreach -pt run build",
+    "build-raspberry": "rm -r node_modules/@mjuz/grpc-protos && cp -r mjuz-grpc-protos node_modules/@mjuz/grpc-protos",
+    "clean": "yarn workspaces foreach -p run clean",
+    "lint": "yarn workspaces foreach -p run lint",
+    "install-protos": "yarn workspace @mjuz/grpc-protos prepublish && rm -r node_modules/@mjuz/grpc-protos && cp -r mjuz-grpc-protos node_modules/@mjuz/grpc-protos",
+    "postinstall-all": "patch-package && yarn install-protos && yarn build",
+    "postinstall": "patch-package"
+  },
+  "devDependencies": {
+    "patch-package": "^6.4.7",
+    "postinstall-postinstall": "^2.1.0"
+  },
+  "workspaces": [
+    "mjuz-core",
+    "mjuz-grpc-protos",
+    "webpage"
+  ]
+}

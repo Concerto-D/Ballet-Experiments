@@ -1,0 +1,53 @@
+syntax = 'proto3';
+
+package mjuz;
+
+import 'google/protobuf/empty.proto';
+import 'google/protobuf/struct.proto';
+
+service Resources {
+	// Creates or updates a remote.
+	rpc updateRemote(Remote) returns (google.protobuf.Empty) {}
+	// Resends an already registered remote.
+	rpc refreshRemote(Remote) returns (google.protobuf.Empty) {}
+	// Deletes a remote. Assumes that no resource, e.g., offer or wish, depend on the remote.
+	rpc deleteRemote(Remote) returns (google.protobuf.Empty) {}
+
+	// Creates or updates an offer. Assumes a remote is registered for the provided beneficiary id.
+	rpc updateOffer(Offer) returns (google.protobuf.Empty) {}
+	// Resends the currently deployed offer state. Assumes a remote is registered for the provided beneficiary id.
+	rpc refreshOffer(Offer) returns (google.protobuf.Empty) {}
+	// Withdraws an offer. On response, we assume no wish for the offer is deployed anymore or will be deployed.
+	rpc deleteOffer(Offer) returns (google.protobuf.Empty) {}
+	
+	// Polls for satisfaction of a wish. If offer is returned, the wish is satisfied with it. If isWithdrawn is `true`,
+	// the offer was withdrawn. If `isWithdrawn` is `false` the offer state is unknown and assumed to be unchanged.
+	rpc getWish(Wish) returns (RemoteOffer) {}
+	// Indicates that wish is not longer deployed.
+	rpc wishDeleted(Wish) returns (google.protobuf.Empty) {}
+}
+
+message Remote {
+	string id = 1;
+	string host = 2;
+	int32 port = 3;
+}
+
+message Offer {
+	string name = 1;
+	string beneficiaryId = 2;
+	google.protobuf.Value offer = 3;
+}
+
+message Wish {
+	string name = 1;
+	string targetId = 2;
+	bool isDeployed = 3;
+}
+
+message RemoteOffer {
+	oneof val {
+		bool isWithdrawn = 1;
+		google.protobuf.Value offer = 2;
+	}
+}

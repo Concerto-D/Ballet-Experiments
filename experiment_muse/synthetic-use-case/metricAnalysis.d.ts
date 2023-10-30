@@ -1,0 +1,10 @@
+export declare const getScriptParameters: (assembly_name: string) => [string, number, string, string, string, number, any];
+export declare const initializeReconf: (assembly_type: string) => any[];
+export declare const initTimeLogDir: (assemblyName: string, current_execution_dir: string, logDirTimestamp: string | null, logger: any) => void;
+export declare const goToSleep: (newExitCode: number) => void;
+export declare const computeServerInstallTime: (transitions_times_file: string, nb_deps_tot: number) => number;
+export declare const computeServerUpdateTime: (transitions_times_file: string, nb_deps_tot: number) => number;
+export declare const computeServerRunningTime: (transitions_times_file: string) => number;
+export declare const computeDepRunningTime: (transitions_times_file: string, assemblyName: string) => number;
+export declare const computeDepInstallTime: (transitions_times_file: string, depName: string) => number;
+export declare const computeDepUpdateTime: (transitions_times_file: string, depName: string) => number;
